@@ -21,7 +21,12 @@ gameState = {
   "play": [],
   "hand": [],
   "bin": [],
+  "playerlife": 50,
+  "playerdecay": 0
 };
+
+document.getElementById('life').innerHTML = gameState['playerlife']
+document.getElementById('decay').innerHTML = gameState['playerdecay']
 
 function assign(obj, val) {
   cardDict[obj].notes = val;
@@ -45,11 +50,14 @@ function cardClick(card) {
   selected = card;
 }
 
-// need to make this anywhere except a card
-//document.getElementById("play").addEventListener('click', (event) => {
-//  console.log(event.target);
-//  popup.style.display = "none";
-//})
+document.body.addEventListener('click', (event) => {
+  if (event.target.className != "card") {
+    popup.style.display = "none";
+    if (event.target.id != "expandview" && event.target.className != "bin") {
+      eview.style.display = "none";
+    }
+  }
+})
 
 bin.addEventListener('click', () => {
   eview.style.display = "flex";
@@ -83,6 +91,7 @@ popup.addEventListener('click', () => {
   }
   popup.style.display = "none";
 })
+
 class Card {
   constructor(name, id) {
     // Card Daata

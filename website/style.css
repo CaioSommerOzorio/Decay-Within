@@ -107,6 +107,42 @@ div {
   width: 10%;
 }
 
+.ld {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
+}
+
+.ld div {
+  padding: 5px;
+  margin: 5px;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.ld > button {
+  padding: 10px;
+}
+
+.ld button {
+  color: white;
+  border: 1px solid black;
+  background-color: rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.ld button:active {
+  background-color: rgba(255,255,255,0.5);
+  transition: transform 0.1s ease;
+}
+
+.ld span {
+  padding: 5px;
+  height: auto;
+}
+
 .hand {
   overflow-y: hidden;
   overflow-x: auto;

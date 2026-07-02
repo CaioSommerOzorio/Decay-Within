@@ -19,7 +19,15 @@
         <div class="bin" id="bin"></div>
         <div class="hand" id="hand"></div>
         <div class="deck" id="deck"></div>
-        <div class="ld" id="ld"></div>
+        <div class="ld" id="ld">
+          <!-- Should I have made it like this? Probably not but its too late now and I can't be bothered -->
+          <!-- Worry not! I will probably change it later -->
+          <div><button onclick="gameState['playerlife']-=1;document.getElementById('life').innerHTML = gameState['playerlife']">-</button><span id="life"></span><button onclick="gameState['playerlife']+=1;document.getElementById('life').innerHTML = gameState['playerlife']">+</button></div>
+          <div><button onclick="gameState['playerdecay']-=1;document.getElementById('decay').innerHTML = gameState['playerdecay']">-</button><span id="decay"></span><button onclick="gameState['playerdecay']+=1;document.getElementById('decay').innerHTML = gameState['playerdecay']">+</button></div>
+          <div><button onclick="gameState['playerlife']-=Number(document.getElementById('decay').innerHTML);document.getElementById('life').innerHTML-=gameState['playerdecay'];">Apply decay</button></div>
+          <div><button onclick="showThreadmark()">Show Threadmark Summons</button></div>
+
+        </div>
       </div>
     </div>
     <div id="rightmenu">

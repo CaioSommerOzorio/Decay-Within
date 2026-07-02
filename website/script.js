@@ -8,12 +8,18 @@ ws.onmessage = (event) => {
   console.log(event.data);
 }
 
+const bin = document.getElementById("bin");
+
 cardDict = {};
+
+gameState = {
+  "play": [],
+  "hand": [],
+  "bin": [],
+};
 
 function assign(obj, val) {
   cardDict[obj].notes = val;
-  console.log(cardDict);
-  //console.log(obj, val);
 }
 
 var selected = null;
@@ -21,20 +27,30 @@ var selected = null;
 popup = document.getElementById("popup")
 popup.style.display = "none";
 
+eview = document.getElementById("expandview")
+
 // need to make this anywhere except a card
 //document.getElementById("play").addEventListener('click', (event) => {
 //  console.log(event.target);
 //  popup.style.display = "none";
 //})
 
+bin.addEventListener('click', () => {
+  eview.style.display = "flex";
+  gameState["bin"].forEach((element) => {
+    eview.appendChild(element.domElement);
+  });
+});
+
 document.addEventListener("keydown", (event) => {
   if (event.key == "Escape") {
     popup.style.display = "none";
+    eview.style.display = "none";
   }
 });
 
 popup.addEventListener('click', () => {
-  console.log(event.target.innerHTML);
+  //console.log(event.target.innerHTML);
   if (event.target.innerHTML == "View") {
     selected.view();
   }
@@ -51,12 +67,12 @@ popup.addEventListener('click', () => {
 })
 
 class Card {
-  constructor(name, area, id) {
+  constructor(name, id) {
     this.name = name;
-    this.area = area;
+    this.area = "hand";
     
     this.domElement = document.createElement('div');
-    document.getElementById(area).appendChild(this.domElement);
+    document.getElementById(this.area).appendChild(this.domElement);
     // here we fetch for card data
     this.domElement.id = id
     cardDict[this.domElement.id] = this
@@ -71,8 +87,13 @@ class Card {
     this.rank = "Captain";
     this.flavor = "The vibrations of battle resonate inside the nest.";
     this.notes = "";
+    gameState[this.area].push(this)
     this.domElement.addEventListener('click', (event) => {
-      console.log("activating")
+      if (this.area == "bin") {
+        
+        return;
+      }
+
       popup.style.display = "flex";
       popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
       popup.style.left = event.clientX+"px";
@@ -99,10 +120,18 @@ class Card {
     if (this.area == area) {
       return;
     }
-    document.getElementById(area).appendChild(this.domElement);
-    this.area = area
+    var areaDOM = document.getElementById(area);
+    document.getElementById(this.area).removeChild(this.domElement);
+    areaDOM.firstChild ? areaDOM.removeChild(areaDOM.firstChild) : null;
+    areaDOM.appendChild(document.createElement('div'));
+    areaDOM.style.backgroundImage = `url(${this.image})`;
+    areaDOM.className = "card";
+    gameState[this.area].splice(gameState[this.area].indexOf(this),1)
+    this.area = area;
+    gameState[this.area].push(this);
+    console.log(gameState);
   }
 }
 
 var card = new Card("Calyx, Weaver of Webs", "hand", "1");
-var othercard = new Card("some bs", "bin", "2");
+var othercard = new Card("some bs", "2");

@@ -98,6 +98,7 @@ div {
   justify-content: center;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 
 .bin, .deck, .ld {
@@ -111,4 +112,18 @@ div {
   display: flex;
   align-items: center;
   width: 70%;
+}
+
+#expandview {
+  position: absolute;
+  overflow-x: auto;
+  top: 50%;
+  left: 40%;
+  height: 300px;
+  width: 70%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
 }

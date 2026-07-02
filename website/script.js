@@ -9,7 +9,11 @@ ws.onmessage = (event) => {
 }
 
 const bin = document.getElementById("bin");
+const popup = document.getElementById("popup")
+popup.style.display = "none";
+const eview = document.getElementById("expandview")
 
+var selected = null;
 cardDict = {};
 
 gameState = {
@@ -22,12 +26,12 @@ function assign(obj, val) {
   cardDict[obj].notes = val;
 }
 
-var selected = null;
-
-popup = document.getElementById("popup")
-popup.style.display = "none";
-
-eview = document.getElementById("expandview")
+function cardClick(card) {
+  popup.style.display = "flex";
+  popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
+  popup.style.left = event.clientX+"px";
+  selected = card;
+}
 
 // need to make this anywhere except a card
 //document.getElementById("play").addEventListener('click', (event) => {
@@ -67,28 +71,24 @@ popup.addEventListener('click', () => {
   }
   popup.style.display = "none";
 })
-
-function cardClick(card) {
-  popup.style.display = "flex";
-  popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
-  popup.style.left = event.clientX+"px";
-  selected = card;
-
-}
-
 class Card {
   constructor(name, id) {
-    this.name = name;
+    // Card Daata
     this.area = "hand";
     this.known = true;
+    this.id = id;
+    gameState[this.area].push(this)
+    cardDict[id] = this
+    // DOM configuring
     this.domElement = document.createElement('div');
     document.getElementById(this.area).appendChild(this.domElement);
-    // here we fetch for card data
     this.domElement.id = id
-    cardDict[this.domElement.id] = this
-    this.domElement.classList.add("card");
     this.image = "https://i.redd.it/jw1pc6irt59d1.png"
+    this.domElement.classList.add("card");
     this.domElement.style.backgroundImage = `url(${this.image})`
+    this.domElement.onclick = () => cardClick(this);
+    // Card content
+    this.name = name;
     this.text = "This card Can't be interacted with by your opponents in any way conceivable by the human mind. When you cast this spell, take as many turns as you may possibly wish for. Flying, protection from the entirety of the electromagnetic spectrum, annihilator N0. When 50 Fucking Emrakuls is put into any zone from the battlefield, its owner is sentenced to execution by guillotine.";
     this.type = "Legendary Creatures";
     this.tribe = "Emrakuls";
@@ -97,8 +97,6 @@ class Card {
     this.rank = "Captain";
     this.flavor = "The vibrations of battle resonate inside the nest.";
     this.notes = "";
-    gameState[this.area].push(this)
-    this.domElement.onclick = () => cardClick(this);
   }
 
   view() {
@@ -117,17 +115,16 @@ class Card {
   }
 
   sendTo(area) {
+    // Probably don't need this but just in case
     if (this.area == area) {
       return;
     }
-    // Get rid of previous instance
+    // Get rid of previous thumbnail
     if (this.area == "bin") {
-      console.log("Removing first child");
-      console.log(bin.firstChild);
       bin.removeChild(bin.firstChild);
     }
 
-    // Populate new area
+    // Populate new thumbnail
     if (area == "bin") {
       document.getElementById(this.area).removeChild(this.domElement);
       var binThumbnail = document.createElement("div");
@@ -138,11 +135,13 @@ class Card {
     else {
       document.getElementById(area).appendChild(this.domElement);
     }
-
+    
+    // Update game state and this card's area
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
     gameState[area].push(this);
     this.area = area;
-    console.log(gameState);
+
+    // Clean up view
     popup.style.display = "none";
     eview.style.display = "none";
   }

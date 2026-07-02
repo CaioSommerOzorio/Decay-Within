@@ -52,7 +52,7 @@ div {
   width: 80%;
 }
 
-#leftmenu {
+#rightmenu {
   width: 20%;
   flex-direction: column;
   display: flex;

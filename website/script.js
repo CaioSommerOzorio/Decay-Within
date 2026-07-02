@@ -66,6 +66,14 @@ popup.addEventListener('click', () => {
   popup.style.display = "none";
 })
 
+function cardClick(card) {
+  popup.style.display = "flex";
+  popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
+  popup.style.left = event.clientX+"px";
+  selected = card;
+
+}
+
 class Card {
   constructor(name, id) {
     this.name = name;
@@ -88,17 +96,7 @@ class Card {
     this.flavor = "The vibrations of battle resonate inside the nest.";
     this.notes = "";
     gameState[this.area].push(this)
-    this.domElement.addEventListener('click', (event) => {
-      if (this.area == "bin") {
-        
-        return;
-      }
-
-      popup.style.display = "flex";
-      popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
-      popup.style.left = event.clientX+"px";
-      selected = this;
-    });
+    this.domElement.onclick = () => cardClick(this);
   }
 
   view() {
@@ -120,18 +118,32 @@ class Card {
     if (this.area == area) {
       return;
     }
-    var areaDOM = document.getElementById(area);
-    document.getElementById(this.area).removeChild(this.domElement);
-    areaDOM.firstChild ? areaDOM.removeChild(areaDOM.firstChild) : null;
-    areaDOM.appendChild(document.createElement('div'));
-    areaDOM.style.backgroundImage = `url(${this.image})`;
-    areaDOM.className = "card";
+    // Get rid of previous instance
+    if (this.area == "bin") {
+      console.log("Removing first child");
+      console.log(bin.firstChild);
+      bin.removeChild(bin.firstChild);
+    }
+
+    // Populate new area
+    if (area == "bin") {
+      document.getElementById(this.area).removeChild(this.domElement);
+      var binThumbnail = document.createElement("div");
+      binThumbnail.style.backgroundImage = `url(${this.image})`;
+      binThumbnail.className = "card";
+      bin.appendChild(binThumbnail);
+    }
+    else {
+      document.getElementById(area).appendChild(this.domElement);
+    }
+
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
+    gameState[area].push(this);
     this.area = area;
-    gameState[this.area].push(this);
     console.log(gameState);
+    popup.style.display = "none";
   }
 }
 
-var card = new Card("Calyx, Weaver of Webs", "hand", "1");
+var card = new Card("Calyx, Weaver of Webs", "1");
 var othercard = new Card("some bs", "2");

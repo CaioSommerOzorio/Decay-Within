@@ -11,6 +11,7 @@ div {
 
 #popup {
   position: absolute;
+  z-index: 999;
   padding: 10px;
   background-color: white;
   display: flex;
@@ -85,6 +86,7 @@ div {
   height: 57vh;
   position: relative;
   overflow: hidden;
+  display: flex;
 }
 
 #player {
@@ -112,6 +114,10 @@ div {
   display: flex;
   align-items: center;
   width: 70%;
+}
+
+#expandview > .card {
+  height: 250px;
 }
 
 #expandview {

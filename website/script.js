@@ -14,7 +14,8 @@ popup.style.display = "none";
 const eview = document.getElementById("expandview")
 
 var selected = null;
-cardDict = {};
+var cardDict = {};
+var options = ["View","Send to play","Send to hand","Send to bin"]
 
 gameState = {
   "play": [],
@@ -26,7 +27,18 @@ function assign(obj, val) {
   cardDict[obj].notes = val;
 }
 
+function buildPopup(card, options) {
+  popup.replaceChildren();
+  var spanOption
+  options.forEach((element) => {
+    spanOption = document.createElement("span");
+    spanOption.innerHTML = element;
+    popup.appendChild(spanOption);
+  })
+}
+
 function cardClick(card) {
+  buildPopup(card, card.options);
   popup.style.display = "flex";
   popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
   popup.style.left = event.clientX+"px";
@@ -77,6 +89,7 @@ class Card {
     this.area = "hand";
     this.known = true;
     this.id = id;
+    this.options = options.filter(item => item != `Send to ${this.area}`);
     gameState[this.area].push(this)
     cardDict[id] = this
     // DOM configuring
@@ -140,6 +153,7 @@ class Card {
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
     gameState[area].push(this);
     this.area = area;
+    this.options = options.filter(item => item != `Send to ${this.area}`);
 
     // Clean up view
     popup.style.display = "none";

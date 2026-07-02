@@ -1,0 +1,8 @@
+{
+    "name": "Suspended Charge",
+    "type": "sorcery",
+    "tribe": "arachnid",
+    "text": "Creatures you control get +X attack and +X health until end of turn where X is the number of summons with threadmark counters that you control",
+    "rank": "Soldier",
+    "flavor": "The presence of the expected empower the existing."
+}

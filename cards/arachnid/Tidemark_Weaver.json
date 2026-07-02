@@ -1,0 +1,10 @@
+{
+    "name": "Tidemark Weaver",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "4",
+    "attack": "3",
+    "text": "When Tidemark Weaver enters, choose one \u2014 remove a Threadmark counter from target summon, or add one. You lose 2 vitality.",
+    "rank": "Sergeant",
+    "flavor": "The tide of time pulls both ways."
+}

@@ -1,0 +1,145 @@
+[Game Mechanics]
+=====================
+Players get 1 free draw per turn and 1 free summon per turn
+For every extra summon, players pay x vitality, and for every extra draw
+players get 1 decay counter.
+The game is won when the opponent's core is destroyed, either through attacking or through decay counters
+Players start with 50 vitality each.
+Different formats may start with different vitality.
+Players start with 50 life each
+
+[Combat]
+=============
+Each turn after moving, there is a combat step.
+If there are one or more creatures in the same zone as an opponent's creature, then combat begins on that zone.
+The active player chooses the order of combat for the zones.
+The players each pick up their creatures from the zone, and start placing them face down separated into 3 lanes one after the other, starting with the non active player.
+
+[Summoning]
+There are 4 ranks that each cost vitality to play:
+Soldier : 2 vitality
+Sergeant: 5 vitality 
+Captain : 8 vitality 
+General : 12 vitality
+
+[Motherships]
+==================
+Each mothership defines what tribes are allowed to contain in your deck
+Motherships start in play
+Each mothership has a core, energy and control sector.
+Players can defeat their opponent's sectors to weaken their buffs.
+For example: a mothership may have:
+	Core: buff 1
+	Energy: buff 2
+	Control: buff 3
+If the energy sector is destroyed, the energy buff is taken away.
+If the core dies, the player loses.
+
+[Tribes]
+=============
+Arachnids - Time Weavers
+	Theme: Delaying summons
+	Subtheme: Summoning outside of turn
+	Mechanics: 
+		- Threadmark: casting spells on an earlier turn for a payoff on a later turn
+		- Echo: Threadmarked spells can be copied
+	Flavor: Patient, waiting for the right moment
+
+Specters - Echo Raiders
+	Theme: Direct damage and burn
+	Subtheme: Death triggers
+	Mechanics: 
+		- Aftermath: Once a specter dies it deals more damage
+		- Phasing: Slipping through opponent's defences to directly damage their ship
+	Flavor: Short burts of direct damage
+
+Swarmkin - Endless Replicators
+	Theme: Flooding the field
+	Subtheme: Merging creatures
+	Mechanics:
+		- Overrun: Benefits from having multiple of one 
+		- Mitosis: Create copies when it dies
+	Flavor: Easy to wipe but must wipe all, otherwise they multiply.
+
+Parasitic Bots - Host Enhancers 
+	Theme: Can be inserted into any deck
+	Subtheme: Gaining control of creatures
+	Mechanics:
+		- Attach: Can attach upgrades to other cards
+		- Hijack: Can attach to an enemy system to weaken it
+	Flavor: Powerless by itself but with the right host, can be powerful
+
+Fungi - Biomass Collective
+	Theme: Decreasing decay/vitality gain
+	Subtheme: High defence low attack
+	Mechanics:
+		- Regenerate: Remove one or more decay counters from you
+		- Bloom: Payoff for removing decay counters
+	Flavor: Can work as either vitality gain or enable more card/spells to be drawn/cast
+
+Wraith - Shadow Corrupts
+	Theme: More decay means stronger troops
+	Subtheme: Decay counter delay (temporary immunity from decay damage)
+	Mechanics:
+		- Corruption: Abilities/stats increase the more decay counters you have
+		- Haunt: Weaken an enemy system after death
+	Flavor: Works with decay counters and edging death
+
+Eyes - All Knower and All Seer
+	Theme: Can look at opponent's hand/library
+	Subtheme: Playing cards from places other than your hand
+	Mechanics: 
+		- Clairvoyance: Peek at opponent’s hand or top of library each turn.
+		- Premonition: Payoff once opponents play a card of the chosen type
+	Flavor: Know all outcomes, can make decisions based on information
+
+Doppelgangers - Deceiving Shapeshifters
+	Theme: Own creatures and playstyle depend on the opponent's
+	Subtheme: Group hug: more creatures from opponents means more creatures for you
+	Mechanics:
+		- Mutate: Cards can change characteristics after they're in play
+		- Mime: Enter the field as a copy of an opponent’s card but with a twist.
+	Flavor: What you do, I do better
+
+Demons - Soul Fetchers
+	Theme: Reanimating cards
+	Subtheme: Discarding and enter the graveyard triggers
+	Mechanics:
+		- Soul fetch: Creature comes back for a turn
+		- Feed the infernum: Make opponent's discard
+	Flavor: Working with the graveyard 
+
+[Lore]
+The Arachnids once wove the fabric of time.
+Every choice, every battle, every future was caught in their web.
+
+But the Wraiths broke the weave.
+
+Hungering for more power, they tore at the threads,
+feeding on the edges of death until the strands unraveled.
+From their greed, Decay was born —
+a creeping force that corrodes every action and choice.
+
+The Arachnids tried to contain it,
+to weave new patterns that could hold the rot.
+But the other tribes saw opportunity.
+
+The Specters turned Decay into fire,
+striking fast and burning bright.
+
+The Swarmkin multiplied through it,
+each loss replaced by ten more.
+
+The Fungi grew from it,
+converting rot into fresh strength.
+
+The Eyes watched futures split apart,
+they whispered of what would happen.
+But never of what should.
+
+The Doppelgangers mirrored what they saw,
+becoming whatever the war demanded.
+
+Now the Motherships awaken.
+Their cores flicker, their sectors weaken,
+and the tribes gather for war on the shared world below

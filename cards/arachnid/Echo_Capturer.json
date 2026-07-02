@@ -1,0 +1,7 @@
+{
+    "name": "Echo Capturer",
+    "type": "structure",
+    "tribe": "arachnid",
+    "text": "At the end of each one of your turns, create a spider with X attack and X health, where X is the number of summons resolved this turn.",
+    "flavor": "The echoes gather, and the nest answers."
+}

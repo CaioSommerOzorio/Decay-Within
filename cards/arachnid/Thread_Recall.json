@@ -1,0 +1,8 @@
+{
+    "name": "Thread Recall",
+    "type": "sorcery",
+    "tribe": "arachnid",
+    "text": "Return target summon from your graveyard to play with threadmark counters equal to its vitality cost",
+    "rank": "Soldier",
+    "flavor": "Threads never truly sever"
+}

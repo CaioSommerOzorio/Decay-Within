@@ -1,0 +1,10 @@
+{
+    "name": "Replicating Cocoon",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "1",
+    "attack": "2",
+    "text": "When you play Replicating Cocoon choose any number X above 0. Replicating Cocoon gains Threadmark X and Echo X.",
+    "rank": "Sergeant",
+    "flavor": "The patience weaved into the silk is the very essence of the spiderlings."
+}

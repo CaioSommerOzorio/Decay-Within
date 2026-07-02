@@ -1,0 +1,10 @@
+{
+    "name": "Calyx, Reweaver of The Webs",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "7",
+    "attack": "1",
+    "text": "Whenever Calyx deals combat damage, you gain life equal to the amount of summons with threadmark counters.",
+    "rank": "Captain",
+    "flavor": "The vibrations of battle resonate inside the nest."
+}

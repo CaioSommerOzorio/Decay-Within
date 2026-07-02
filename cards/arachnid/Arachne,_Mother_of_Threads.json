@@ -1,0 +1,10 @@
+{
+    "name": "Arachne, Mother of Threads",
+    "type": "mothership",
+    "tribe": "arachnid",
+    "core vitality": "70",
+    "core effect": "Once per turn, you may remove or add a threadmark counter to a threadmarked summon",
+    "control effect": "Once per opponent's turn, you may pay 2 vitality to add a threadmark counter to a summon they play",
+    "energy effect": "At the end of each one of your turns, if no decay counters were gained, a threadmarked summon gains Echo 1",
+    "flavor": "Even broken strands return to the loom of time."
+}

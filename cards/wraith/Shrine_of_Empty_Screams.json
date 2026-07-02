@@ -1,0 +1,8 @@
+{
+    "name": "Shrine of Empty Screams",
+    "type": "structure",
+    "tribe": "wraith",
+    "rank": "Sergeant",
+    "text": "Whenever a summon you own dies, you may gain 1 decay counter. If you do, it deals 3 damage to any enemy system.",
+    "flavor": "Every death resounds, and the core cannot close its ears"
+}

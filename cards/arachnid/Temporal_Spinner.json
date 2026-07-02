@@ -1,0 +1,10 @@
+{
+    "name": "Temporal Spinner",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "6",
+    "attack": "2",
+    "text": "Threadmark 2. At the start of your turn, you may remove a threadmark counter from a summon you control.",
+    "rank": "Captain",
+    "flavor": "She tugs the silk of tomorrow into today."
+}

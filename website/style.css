@@ -1,0 +1,50 @@
+body {
+  background-color: #232323;
+  color: white;
+  display: flex;
+}
+
+div {
+  border: 2px solid red;
+}
+
+#playarea {
+  flex-grow: 4;
+}
+
+#leftmenu {
+  flex-grow: 1;
+  flex-direction: column;
+  display: flex;
+}
+
+#cardpreview {
+  flex-grow: 1;
+}
+
+#carddetails {
+  flex-grow: 1;
+}
+
+#opponent {
+  display:flex;
+  height: 20vh;
+}
+
+#play {
+  height: 57vh; /* ts is not a joke its the
+                   actual highest non scroll
+                   value 😭 */
+}
+#player {
+  display:flex;
+  height: 20vh;
+}
+
+.bin, .deck, .ld {
+  width: 10%;
+}
+
+.hand {
+  width: 70%;
+}

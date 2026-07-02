@@ -1,0 +1,10 @@
+{
+    "name": "Crypt Reaver",
+    "type": "troop",
+    "tribe": "wraith",
+    "health": "4",
+    "attack": "4",
+    "text": "Haunt - Target opponent's summon of the lowest rank loses all abilities",
+    "rank": "General",
+    "flavor": "It collects the lowest souls first"
+}

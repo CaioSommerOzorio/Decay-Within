@@ -1,0 +1,10 @@
+{
+    "name": "Echo Weaver\u2019s Pupae",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "2",
+    "attack": "2",
+    "text": "Threadmark 1. When Echo Weaver\u2019s Pupae resolves, create a 1/1 Spiderling token",
+    "rank": "Soldier",
+    "flavor": "Tiny voices repeat their mother\u2019s song"
+}

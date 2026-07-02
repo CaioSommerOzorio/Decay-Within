@@ -1,0 +1,10 @@
+{
+    "name": "Hollow Warden",
+    "type": "troop",
+    "tribe": "wraith",
+    "health": "5",
+    "attack": "2",
+    "text": "When Hollow Warden dies, it Hauntsn another summon",
+    "rank": "Sergeant",
+    "flavor": "Guarding nothing less than the echoes of pain"
+}

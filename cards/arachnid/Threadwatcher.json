@@ -1,0 +1,10 @@
+{
+    "name": "Threadwatcher",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "3",
+    "attack": "2",
+    "text": "At the start of your turn, look at the top X cards of your deck where X is the amount of threadmarked spells you own. Put any cards into the bottom of your deck, and the rest on the top in any order.",
+    "rank": "Sergeant",
+    "flavor": "Every tremor in the web tells of what comes next."
+}

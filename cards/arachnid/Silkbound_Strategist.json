@@ -1,0 +1,10 @@
+{
+    "name": "Silkbound Strategist",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "5",
+    "attack": "3",
+    "text": "Threadmark 3. Echo 1. Creatures you control gain +1 attack for each threadmarked summon you own.",
+    "rank": "Captain",
+    "flavor": "Power gathers where the strands converge."
+}

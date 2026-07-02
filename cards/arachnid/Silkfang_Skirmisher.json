@@ -1,0 +1,9 @@
+{
+    "name": "Silkfang Skirmisher",
+    "tribe": "arachnid",
+    "health": "1",
+    "attack": "2",
+    "text": "Silkfang Skirmisher gains +1 attack for every Threadmarked spell you own. If you have 3 or more threadmarked spells, Silkfang Skirmisher gains pierce.",
+    "rank": "Soldier",
+    "flavor": "Threads tighten, fangs sink deeper."
+}

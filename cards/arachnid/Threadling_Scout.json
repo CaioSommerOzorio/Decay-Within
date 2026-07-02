@@ -1,0 +1,10 @@
+{
+    "name": "Threadling Scout",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "1",
+    "attack": "1",
+    "text": "",
+    "rank": "Soldier",
+    "flavor": "Every footfall leaves a whisper in the silk."
+}

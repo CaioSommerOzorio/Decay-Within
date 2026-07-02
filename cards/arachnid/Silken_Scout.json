@@ -1,0 +1,9 @@
+{
+    "name": "Silken Scout",
+    "tribe": "arachnid",
+    "health": "3",
+    "attack": "1",
+    "text": "Threadmark 1. When Silken Scout enters, target creature cannot deal damage until your next turn.",
+    "rank": "Soldier",
+    "flavor": "A single strand captures even the fiersest pray."
+}

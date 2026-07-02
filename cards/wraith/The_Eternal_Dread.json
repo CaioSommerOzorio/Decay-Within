@@ -1,0 +1,9 @@
+{
+    "name": "The Eternal Dread",
+    "tribe": "wraith",
+    "core vitality": "50",
+    "core effect": "Summons you control get +1 attack and defence for every 5 decay counters you have.",
+    "control effect": "Whenever a summon you control dies, deal 1 damage to an enemy sector or core.",
+    "energy effect": "Once per turn, you may prevent 1 damage from a decay counter.",
+    "flavor": "It does not slay, it enables"
+}

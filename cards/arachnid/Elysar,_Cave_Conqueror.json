@@ -1,0 +1,10 @@
+{
+    "name": "Elysar, Cave Conqueror",
+    "type": "troop",
+    "tribe": "arachnid",
+    "health": "5",
+    "attack": "2",
+    "text": "Whenever you echo a summon, draw a card.",
+    "rank": "General",
+    "flavor": "Echoes in the deep may not be yours alone"
+}

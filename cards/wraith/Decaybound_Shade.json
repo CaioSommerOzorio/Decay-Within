@@ -1,0 +1,10 @@
+{
+    "name": "Decaybound Shade",
+    "type": "troop",
+    "tribe": "wraith",
+    "health": "2",
+    "attack": "1",
+    "text": "Decaubound Shade gets +1 attack for every decay counter you have",
+    "rank": "Sergeant",
+    "flavor": "For every heartbeat lost, another shadow stirs"
+}

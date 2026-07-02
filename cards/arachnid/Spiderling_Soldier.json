@@ -1,0 +1,9 @@
+{
+    "name": "Spiderling Soldier",
+    "tribe": "arachnid",
+    "health": "2",
+    "attack": "1",
+    "text": "Whenever a threadmarked summon resolves under your control, Spiderling Soldier gains +1 attack.",
+    "rank": "Soldier",
+    "flavor": "The first strand is always the most fragile\u2026 yet without it, no web holds."
+}

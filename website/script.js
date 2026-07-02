@@ -44,8 +44,10 @@ bin.addEventListener('click', () => {
 
 document.addEventListener("keydown", (event) => {
   if (event.key == "Escape") {
+    if (popup.style.display == "none") {
+      eview.style.display = "none";
+    }
     popup.style.display = "none";
-    eview.style.display = "none";
   }
 });
 
@@ -78,7 +80,7 @@ class Card {
   constructor(name, id) {
     this.name = name;
     this.area = "hand";
-    
+    this.known = true;
     this.domElement = document.createElement('div');
     document.getElementById(this.area).appendChild(this.domElement);
     // here we fetch for card data
@@ -142,6 +144,7 @@ class Card {
     this.area = area;
     console.log(gameState);
     popup.style.display = "none";
+    eview.style.display = "none";
   }
 }
 

@@ -2,28 +2,77 @@ body {
   background-color: #232323;
   color: white;
   display: flex;
+  overflow: hidden;
 }
 
 div {
   border: 2px solid red;
 }
 
+#popup {
+  position: absolute;
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  width: max-content;     /* Keeps popup tight to text size */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+#popup span {
+  color: black;
+  padding: 5px;
+  transition: transform 1s ease;
+}
+
+#popup span:hover {
+  background-color: lightgray;
+  transition: transform 1s ease;
+  cursor: pointer;
+}
+
+.card {
+  height: max(90%, 142px);
+  width: auto;
+  aspect-ratio: 2.5/3.5;
+  transition: transform 0.1s ease;
+  background-size: 100% 100%; /* Width Height */
+  background-repeat: no-repeat;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+  transition: transform 0.1s ease;
+}
+
 #playarea {
-  flex-grow: 4;
+  width: 80%;
 }
 
 #leftmenu {
-  flex-grow: 1;
+  width: 20%;
   flex-direction: column;
   display: flex;
+  overflow-x: hidden;
 }
+
 
 #cardpreview {
   flex-grow: 1;
+  background-size: 100% 100%; /* Width Height */
+  background-repeat: no-repeat;
+  height: 55%;
 }
 
 #carddetails {
-  flex-grow: 1;
+  height: 45%;
+  padding: 10px;
+  word-wrap: break-word;     /* Legacy support */
+  overflow-wrap: break-word; /* Modern standard: forces long words to break */
+  white-space: normal;       /* Ensures text wraps to new lines */
+  overflow-y: auto;    /* Adds a scrollbar only if the text is too long */
+  max-height: 100%;    /* Keeps it contained within the flex parent */
 }
 
 #opponent {
@@ -41,10 +90,21 @@ div {
   height: 20vh;
 }
 
+.bin {
+  overflow-x: auto;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
 .bin, .deck, .ld {
   width: 10%;
 }
 
 .hand {
+  overflow-x: auto;
+  justify-content: center;
+  display: flex;
+  align-items: center;
   width: 70%;
 }

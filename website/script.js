@@ -16,6 +16,7 @@ const eview = document.getElementById("expandview")
 var selected = null;
 var cardDict = {};
 var options = ["View","Send to play","Send to hand","Send to bin"]
+var binThumbnail = null
 
 gameState = {
   "play": [],
@@ -76,7 +77,6 @@ document.addEventListener("keydown", (event) => {
 });
 
 popup.addEventListener('click', () => {
-  //console.log(event.target.innerHTML);
   if (event.target.innerHTML == "View") {
     selected.view();
   }
@@ -141,17 +141,38 @@ class Card {
     if (this.area == area) {
       return;
     }
-    // Get rid of previous thumbnail
+    // This is here so bin thumbnails can reference gameState directly
+    gameState[this.area].splice(gameState[this.area].indexOf(this),1)
+    gameState[area].push(this);
+    // Get rid of current thumbnail
     if (this.area == "bin") {
-      bin.removeChild(bin.firstChild);
+      if (bin.firstChild) {
+        bin.removeChild(bin.firstChild);
+      }
+      // Set new thumbnail to top card
+      if (gameState.bin.length > 0) {
+        binThumbnail = document.createElement("div");
+        console.log(gameState['bin'])
+        binThumbnail.style.backgroundImage = `url(${gameState['bin'].at(-1).image})`;
+        binThumbnail.className = "card";
+        binThumbnail.id = "binthumbnail";
+        bin.appendChild(binThumbnail);
+      }
     }
 
     // Populate new thumbnail
     if (area == "bin") {
+      // Get rid of wherever the card was previously
       document.getElementById(this.area).removeChild(this.domElement);
-      var binThumbnail = document.createElement("div");
+      // Remove previous thumbnail
+      if (bin.firstChild) {
+        bin.firstChild.remove()
+      }
+      // Make the thumbnail for the bin
+      binThumbnail = document.createElement("div");
       binThumbnail.style.backgroundImage = `url(${this.image})`;
       binThumbnail.className = "card";
+      binThumbnail.id = "binthumbnail";
       bin.appendChild(binThumbnail);
     }
     else {
@@ -159,8 +180,6 @@ class Card {
     }
     
     // Update game state and this card's area
-    gameState[this.area].splice(gameState[this.area].indexOf(this),1)
-    gameState[area].push(this);
     this.area = area;
     this.options = options.filter(item => item != `Send to ${this.area}`);
 

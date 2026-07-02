@@ -8,6 +8,14 @@ ws.onmessage = (event) => {
   console.log(event.data);
 }
 
+cardDict = {};
+
+function assign(obj, val) {
+  cardDict[obj].notes = val;
+  console.log(cardDict);
+  //console.log(obj, val);
+}
+
 var selected = null;
 
 popup = document.getElementById("popup")
@@ -43,14 +51,15 @@ popup.addEventListener('click', () => {
 })
 
 class Card {
-  constructor(name, area) {
+  constructor(name, area, id) {
     this.name = name;
     this.area = area;
-
+    
     this.domElement = document.createElement('div');
     document.getElementById(area).appendChild(this.domElement);
     // here we fetch for card data
-    this.domElement.id = "testcard"
+    this.domElement.id = id
+    cardDict[this.domElement.id] = this
     this.domElement.classList.add("card");
     this.image = "https://i.redd.it/jw1pc6irt59d1.png"
     this.domElement.style.backgroundImage = `url(${this.image})`
@@ -61,6 +70,7 @@ class Card {
     this.attack = 750;
     this.rank = "Captain";
     this.flavor = "The vibrations of battle resonate inside the nest.";
+    this.notes = "";
     this.domElement.addEventListener('click', (event) => {
       console.log("activating")
       popup.style.display = "flex";
@@ -69,6 +79,7 @@ class Card {
       selected = this;
     });
   }
+
   view() {
     document.getElementById("cardpreview").style.backgroundImage = `url(${selected.image})`;
     document.getElementById("carddetails").innerHTML = 
@@ -78,9 +89,12 @@ class Card {
       <p>Text: ${this.text}</p>
       <p>Rank: ${this.rank}</p>
       <p>Attack/Health: ${this.attack}/${this.health}</p>
-      <p>Flavour: ${this.flavor}</p>`
+      <p>Flavour: ${this.flavor}</p>
+      <p>Notes: <input id='notes' type='textarea' value='${this.notes}'></p>
+      <p><button onclick='assign(${this.domElement.id}, document.getElementById("notes").value)'>Update</button></p>`
     return;
   }
+
   sendTo(area) {
     if (this.area == area) {
       return;
@@ -90,5 +104,5 @@ class Card {
   }
 }
 
-var card = new Card("Calyx, Weaver of Webs", "hand");
-
+var card = new Card("Calyx, Weaver of Webs", "hand", "1");
+var othercard = new Card("some bs", "bin", "2");

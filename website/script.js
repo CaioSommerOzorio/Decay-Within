@@ -2,12 +2,13 @@ const ws = new WebSocket('ws://localhost:8080');
 
 ws.onopen = () => {
   console.log("Connection opened");
-}
+};
 
 ws.onmessage = (event) => {
   console.log(event.data);
-}
+};
 
+const cardBack = "https://i.pinimg.com/736x/80/4f/9a/804f9abe92c8e214a0ecb51d4c151059.jpg";
 const bin = document.getElementById("bin");
 const eview = document.getElementById("expandview");
 const deck = document.getElementById("deck");
@@ -16,13 +17,15 @@ popup.style.display = "none";
 
 var selected = null;
 var cardDict = {};
-var options = ["View","Send to play","Send to hand","Send to bin"]
-var binThumbnail = null
+var options = ["View","Send to play","Send to hand","Send to bin","Send to deck"];
+var binThumbnail = null;
+var deckThumbnail = null;
 
 gameState = {
   "play": [],
   "hand": [],
   "bin": [],
+  "deck": [],
   "playerlife": 50,
   "playerdecay": 0
 };
@@ -30,25 +33,35 @@ gameState = {
 document.getElementById('life').innerHTML = gameState['playerlife']
 document.getElementById('decay').innerHTML = gameState['playerdecay']
 
+Array.prototype.shuffle = function() {
+  const result = this
+    .map(value => ({ value, sortKey: Math.random() }))
+    .sort((a, b) => a.sortKey - b.sortKey)
+    .map(({ value }) => value);
+
+  this.splice(0, this.length, ...result);
+  return this;
+}
+
 function assign(obj, val) {
   cardDict[obj].notes = val;
 }
 
-function buildPopup(card, options) {
+function buildPopup(options, e) {
   popup.replaceChildren();
-  var spanOption
+  var spanOption;
   options.forEach((element) => {
     spanOption = document.createElement("span");
     spanOption.innerHTML = element;
     popup.appendChild(spanOption);
   })
-}
-
-function cardClick(card, e) {
-  buildPopup(card, card.options);
   popup.style.display = "flex";
   popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
   popup.style.left = e.clientX+"px";
+}
+
+function cardClick(card, e) {
+  buildPopup(card.options, e);
   selected = card;
 }
 
@@ -60,6 +73,11 @@ document.body.addEventListener('click', (event) => {
     }
   }
 })
+
+deck.addEventListener('click', (e) => {
+  buildPopup(["Draw","Shuffle"], e);
+  popup.style.display = "flex";
+});
 
 bin.addEventListener('click', () => {
   eview.style.display = "flex";
@@ -78,17 +96,30 @@ document.addEventListener("keydown", (event) => {
 });
 
 popup.addEventListener('click', () => {
-  if (event.target.innerHTML == "View") {
-    selected.view();
-  }
-  if (event.target.innerHTML == "Send to play") {
-    selected.sendTo("play");
-  }
-  else if (event.target.innerHTML == "Send to hand") {
-    selected.sendTo("hand");
-  }
-  else if (event.target.innerHTML == "Send to bin") {
-    selected.sendTo("bin");
+  var action = event.target.innerHTML.trim();
+  console.log(`Player chose ${action}`)
+  switch (action) {
+    case "View":
+      selected.view();
+      break;
+    case "Send to play":
+      selected.sendTo("play");
+      break;
+    case "Send to bin":
+      selected.sendTo("bin");
+      break;
+    case "Send to deck":
+      selected.sendTo("deck");
+      break;
+    case "Send to hand":
+      selected.sendTo("hand");
+      break;
+    case "Draw":
+      gameState["deck"].at(-1).sendTo("hand");
+      break;
+    case "Shuffle":
+      gameState["deck"].shuffle();
+      break;
   }
   popup.style.display = "none";
 })
@@ -97,7 +128,7 @@ class Card {
   constructor(name, id) {
     // Card Data
     this.area = "hand";
-    this.known = true;
+    this.known = false;
     this.id = id;
     this.options = options.filter(item => item != `Send to ${this.area}`);
     gameState[this.area].push(this)
@@ -120,6 +151,7 @@ class Card {
     this.rank = "Captain";
     this.flavor = "The vibrations of battle resonate inside the nest.";
     this.notes = "";
+    this.sendTo("deck");
   }
 
   view() {
@@ -138,22 +170,32 @@ class Card {
   }
 
   sendTo(area) {
-    // Probably don't need this but just in case
-    if (this.area == area) {
-      return;
-    }
     // This is here so bin thumbnails can reference gameState directly
+    // Updating gameState
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
     gameState[area].push(this);
-    // Get rid of current bin thumbnail
-    if (this.area == "bin") {
-      if (bin.firstChild) {
-        bin.removeChild(bin.firstChild);
+
+    // Remove the previous thumbnail
+    if (["bin","deck"].includes(area)) {
+      switch (area) {
+        case "bin":
+          if (bin.firstChild) {
+            bin.firstChild.remove();
+          }
+          break;
+        case "deck":
+          if (deck.firstChild) {
+            deck.firstChild.remove();
+          }
+          break;
       }
+    }
+
+    if (this.area == "bin") {
+      bin.firstChild.remove();
       // Set new bin thumbnail to top card
       if (gameState.bin.length > 0) {
         binThumbnail = document.createElement("div");
-        console.log(gameState['bin'])
         binThumbnail.style.backgroundImage = `url(${gameState['bin'].at(-1).image})`;
         binThumbnail.className = "card";
         binThumbnail.id = "binthumbnail";
@@ -161,10 +203,18 @@ class Card {
       }
     }
 
-    // Populate new thumbnail
-    if (area == "bin") {
-      // Get rid of wherever the card was previously in bin
+    if (this.area == "deck") {
+      this.domElement.style.backgroundImage = `url(${this.image})`;
+      this.known = true;
+    }
+
+    if (["hand","play"].includes(this.area)) {
+      // Get rid of wherever the card was previously
       document.getElementById(this.area).removeChild(this.domElement);
+    }
+
+    this.options = options.filter(item => item != `Send to ${this.area}`);
+    if (area == "bin") {
       // Remove previous thumbnail
       if (bin.firstChild) {
         bin.firstChild.remove()
@@ -176,13 +226,26 @@ class Card {
       binThumbnail.id = "binthumbnail";
       bin.appendChild(binThumbnail);
     }
+    else if (area == "deck") {
+      // Remove previous thumbnail
+      this.known = false;
+      this.domElement.style.backgroundImage = `url(${cardBack})`
+      deckThumbnail = document.createElement("div");
+      deckThumbnail.style.backgroundImage = `url(${cardBack})`
+      deckThumbnail.className = "card";
+      deckThumbnail.id = "deckthumbnail";
+      deck.appendChild(deckThumbnail);
+      this.options = ["Draw", "Shuffle"];
+    }
     else {
       document.getElementById(area).appendChild(this.domElement);
     }
     // Update game state and this card's area
     this.area = area;
     this.options = options.filter(item => item != `Send to ${this.area}`);
-
+    if (gameState["deck"].length == 0) {
+      deck.firstChild.remove();
+    }
     // Clean up view
     popup.style.display = "none";
     eview.style.display = "none";
@@ -191,3 +254,4 @@ class Card {
 
 var card = new Card("Calyx, Weaver of Webs", "1");
 var othercard = new Card("some bs", "2");
+othercard.sendTo("hand");

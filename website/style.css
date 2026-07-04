@@ -94,7 +94,7 @@ div {
   height: 20vh;
 }
 
-.bin {
+.bin, .deck {
   overflow-x: auto;
   overflow-y: hidden;
   justify-content: center;

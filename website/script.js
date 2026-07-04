@@ -170,30 +170,11 @@ class Card {
   }
 
   sendTo(area) {
-    // This is here so bin thumbnails can reference gameState directly
-    // Updating gameState
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
     gameState[area].push(this);
 
-    // Remove the previous thumbnail
-    if (["bin","deck"].includes(area)) {
-      switch (area) {
-        case "bin":
-          if (bin.firstChild) {
-            bin.firstChild.remove();
-          }
-          break;
-        case "deck":
-          if (deck.firstChild) {
-            deck.firstChild.remove();
-          }
-          break;
-      }
-    }
-
     if (this.area == "bin") {
       bin.firstChild.remove();
-      // Set new bin thumbnail to top card
       if (gameState.bin.length > 0) {
         binThumbnail = document.createElement("div");
         binThumbnail.style.backgroundImage = `url(${gameState['bin'].at(-1).image})`;
@@ -206,20 +187,18 @@ class Card {
     if (this.area == "deck") {
       this.domElement.style.backgroundImage = `url(${this.image})`;
       this.known = true;
+      if (gameState["deck"].length == 0) {
+        deck.firstChild.remove();
+      }
     }
 
     if (["hand","play"].includes(this.area)) {
-      // Get rid of wherever the card was previously
       document.getElementById(this.area).removeChild(this.domElement);
     }
-
-    this.options = options.filter(item => item != `Send to ${this.area}`);
     if (area == "bin") {
-      // Remove previous thumbnail
       if (bin.firstChild) {
         bin.firstChild.remove()
       }
-      // Make the thumbnail for the bin
       binThumbnail = document.createElement("div");
       binThumbnail.style.backgroundImage = `url(${this.image})`;
       binThumbnail.className = "card";
@@ -227,7 +206,9 @@ class Card {
       bin.appendChild(binThumbnail);
     }
     else if (area == "deck") {
-      // Remove previous thumbnail
+      if (deck.firstChild) {
+        deck.firstChild.remove();
+      }
       this.known = false;
       this.domElement.style.backgroundImage = `url(${cardBack})`
       deckThumbnail = document.createElement("div");
@@ -240,12 +221,9 @@ class Card {
     else {
       document.getElementById(area).appendChild(this.domElement);
     }
-    // Update game state and this card's area
     this.area = area;
     this.options = options.filter(item => item != `Send to ${this.area}`);
-    if (gameState["deck"].length == 0) {
-      deck.firstChild.remove();
-    }
+    this.options = options.filter(item => item != `Send to ${this.area}`);
     // Clean up view
     popup.style.display = "none";
     eview.style.display = "none";

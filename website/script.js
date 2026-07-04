@@ -9,9 +9,10 @@ ws.onmessage = (event) => {
 }
 
 const bin = document.getElementById("bin");
-const popup = document.getElementById("popup")
+const eview = document.getElementById("expandview");
+const deck = document.getElementById("deck");
+const popup = document.getElementById("popup");
 popup.style.display = "none";
-const eview = document.getElementById("expandview")
 
 var selected = null;
 var cardDict = {};
@@ -43,11 +44,11 @@ function buildPopup(card, options) {
   })
 }
 
-function cardClick(card) {
+function cardClick(card, e) {
   buildPopup(card, card.options);
   popup.style.display = "flex";
   popup.style.top = (document.body.offsetHeight>popup.offsetHeight+event.clientY ? event.clientY : document.body.offsetHeight-popup.offsetHeight)+"px";
-  popup.style.left = event.clientX+"px";
+  popup.style.left = e.clientX+"px";
   selected = card;
 }
 
@@ -94,7 +95,7 @@ popup.addEventListener('click', () => {
 
 class Card {
   constructor(name, id) {
-    // Card Daata
+    // Card Data
     this.area = "hand";
     this.known = true;
     this.id = id;
@@ -108,7 +109,7 @@ class Card {
     this.image = "https://i.redd.it/jw1pc6irt59d1.png"
     this.domElement.classList.add("card");
     this.domElement.style.backgroundImage = `url(${this.image})`
-    this.domElement.onclick = () => cardClick(this);
+    this.domElement.onclick = (e) => cardClick(this,e);
     // Card content
     this.name = name;
     this.text = "This card Can't be interacted with by your opponents in any way conceivable by the human mind. When you cast this spell, take as many turns as you may possibly wish for. Flying, protection from the entirety of the electromagnetic spectrum, annihilator N0. When 50 Fucking Emrakuls is put into any zone from the battlefield, its owner is sentenced to execution by guillotine.";
@@ -144,12 +145,12 @@ class Card {
     // This is here so bin thumbnails can reference gameState directly
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
     gameState[area].push(this);
-    // Get rid of current thumbnail
+    // Get rid of current bin thumbnail
     if (this.area == "bin") {
       if (bin.firstChild) {
         bin.removeChild(bin.firstChild);
       }
-      // Set new thumbnail to top card
+      // Set new bin thumbnail to top card
       if (gameState.bin.length > 0) {
         binThumbnail = document.createElement("div");
         console.log(gameState['bin'])
@@ -162,7 +163,7 @@ class Card {
 
     // Populate new thumbnail
     if (area == "bin") {
-      // Get rid of wherever the card was previously
+      // Get rid of wherever the card was previously in bin
       document.getElementById(this.area).removeChild(this.domElement);
       // Remove previous thumbnail
       if (bin.firstChild) {
@@ -178,7 +179,6 @@ class Card {
     else {
       document.getElementById(area).appendChild(this.domElement);
     }
-    
     // Update game state and this card's area
     this.area = area;
     this.options = options.filter(item => item != `Send to ${this.area}`);

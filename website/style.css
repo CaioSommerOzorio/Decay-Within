@@ -5,7 +5,8 @@ body {
   overflow: hidden;
 }
 
-div {
+div, fieldset {
+  margin: 2px;
   border: 2px solid red;
 }
 
@@ -89,6 +90,30 @@ div {
   position: relative;
   overflow: hidden;
   display: flex;
+  flex-direction:column;
+}
+
+#opponent-side, #player-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 50%;
+}
+
+.gamepile {
+  height: 195px;
+  aspect-ratio: 2.5/3.5;
+  align-items: center;
+  justify-content: center;
+}
+
+.gamepile > .card {
+  margin-left: 10px;
+}
+
+legend {
+  align-items: center;
 }
 
 #player {
@@ -125,11 +150,16 @@ div {
 
 .ld > button {
   padding: 10px;
+  margin-bottom: 5px;
+  border: 2px solid red;
+}
+
+div > button {
+  border: 1px solid black;
 }
 
 .ld button {
   color: white;
-  border: 1px solid black;
   background-color: rgba(0,0,0,0.5);
   cursor: pointer;
   transition: transform 0.1s ease;

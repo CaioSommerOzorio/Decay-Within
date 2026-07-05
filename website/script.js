@@ -10,22 +10,38 @@ ws.onmessage = (event) => {
 
 const cardBack = "https://i.pinimg.com/736x/80/4f/9a/804f9abe92c8e214a0ecb51d4c151059.jpg";
 const bin = document.getElementById("bin");
+const obin = document.getElementById("obin")
 const eview = document.getElementById("expandview");
 const deck = document.getElementById("deck");
+const odeck = document.getElementById("odeck");
+const hand = document.getElementById("hand")
+const ohand = document.getElementById("ohand");
+const energy = document.getElementById("energy");
+const core = document.getElementById("core");
+const control = document.getElementById("control");
+const oenergy = document.getElementById("oenergy");
+const ocore = document.getElementById("ocore");
+const ocontrol = document.getElementById("ocontrol");
 const popup = document.getElementById("popup");
 popup.style.display = "none";
 
 var selected = null;
 var cardDict = {};
-var options = ["View","Send to play","Send to hand","Send to bin","Send to deck","Threadmark"];
-var binThumbnail = null;
-var deckThumbnail = null;
+var options = ["View","Send to energy","Send to core","Send to control","Send to hand","Send to bin","Send to deck","Threadmark"];
 
-gameState = {
-  "play": [],
+var gameState = {
+  "energy": [],
+  "core": [],
+  "control": [],
+  "oenergy": [],
+  "ocore": [],
+  "ocontrol": [],
   "hand": [],
+  "ohand": [],
   "deck": [],
+  "odeck": [],
   "bin": [],
+  "obin": [],
   "threadmark": [],
   "playerlife": 50,
   "playerdecay": 0
@@ -98,7 +114,7 @@ document.body.addEventListener('click', (event) => {
     if (
       event.target.id != "expandview" &&
       event.target.className != "bin" &&
-      event.target.innerHTML != "Show Threadmark Summons" &&
+      event.target.innerHTML != "Threadmarked" &&
       event.target.className != "counter") {
       eview.style.display = "none";
     }
@@ -133,8 +149,14 @@ popup.addEventListener('click', () => {
     case "View":
       selected.view();
       break;
-    case "Send to play":
-      selected.sendTo("play");
+    case "Send to energy":
+      selected.sendTo("energy");
+      break;
+    case "Send to core":
+      selected.sendTo("core");
+      break;
+    case "Send to control":
+      selected.sendTo("control");
       break;
     case "Send to bin":
       selected.sendTo("bin");
@@ -211,10 +233,76 @@ class Card {
     gameState[this.area].splice(gameState[this.area].indexOf(this),1)
     gameState[area].push(this);
 
+    if (this.area == "energy") {
+      energy.lastChild.remove();
+      if (gameState.energy.length > 0) {
+        var energyThumbnail = document.createElement("div");
+        energyThumbnail.style.backgroundImage = `url(${gameState['energy'].at(-1).image})`;
+        energyThumbnail.className = "card";
+        energyThumbnail.id = "energythumbnail";
+        energy.appendChild(energyThumbnail);
+      }
+    }
+
+    if (this.area == "oenergy") {
+      oenergy.lastChild.remove();
+      if (gameState.oenergy.length > 0) {
+        var oenergyThumbnail = document.createElement("div");
+        oenergyThumbnail.style.backgroundImage = `url(${gameState['oenergy'].at(-1).image})`;
+        oenergyThumbnail.className = "card";
+        oenergyThumbnail.id = "oenergythumbnail";
+        oenergy.appendChild(oenergyThumbnail);
+      }
+    }
+
+    if (this.area == "core") {
+      core.lastChild.remove();
+      if (gameState.core.length > 0) {
+        var coreThumbnail = document.createElement("div");
+        coreThumbnail.style.backgroundImage = `url(${gameState['core'].at(-1).image})`;
+        coreThumbnail.className = "card";
+        coreThumbnail.id = "corethumbnail";
+        core.appendChild(coreThumbnail);
+      }
+    }
+
+    if (this.area == "ocore") {
+      ocore.lastChild.remove();
+      if (gameState.ocore.length > 0) {
+        var ocoreThumbnail = document.createElement("div");
+        ocoreThumbnail.style.backgroundImage = `url(${gameState['ocore'].at(-1).image})`;
+        ocoreThumbnail.className = "card";
+        ocoreThumbnail.id = "ocorethumbnail";
+        ocore.appendChild(ocoreThumbnail);
+      }
+    }
+
+    if (this.area == "control") {
+      control.lastChild.remove();
+      if (gameState.control.length > 0) {
+        var controlThumbnail = document.createElement("div");
+        controlThumbnail.style.backgroundImage = `url(${gameState['control'].at(-1).image})`;
+        controlThumbnail.className = "card";
+        controlThumbnail.id = "controlthumbnail";
+        control.appendChild(controlThumbnail);
+      }
+    }
+
+    if (this.area == "ocontrol") {
+      ocontrol.lastChild.remove();
+      if (gameState.ocontrol.length > 0) {
+        var ocontrolThumbnail = document.createElement("div");
+        ocontrolThumbnail.style.backgroundImage = `url(${gameState['ocontrol'].at(-1).image})`;
+        ocontrolThumbnail.className = "card";
+        ocontrolThumbnail.id = "ocontrolthumbnail";
+        ocontrol.appendChild(ocontrolThumbnail);
+      }
+    }
+
     if (this.area == "bin") {
-      bin.firstChild.remove();
+      bin.lastChild.remove();
       if (gameState.bin.length > 0) {
-        binThumbnail = document.createElement("div");
+        var binThumbnail = document.createElement("div");
         binThumbnail.style.backgroundImage = `url(${gameState['bin'].at(-1).image})`;
         binThumbnail.className = "card";
         binThumbnail.id = "binthumbnail";
@@ -222,15 +310,34 @@ class Card {
       }
     }
 
+    if (this.area == "obin") {
+      obin.lastChild.remove();
+      if (gameState["obin"].length > 0) {
+        var obinThumbnail = document.createElement("div");
+        obinThumbnail.style.backgroundImage = `url(${gameState['bin'].at(-1).image})`;
+        obinThumbnail.className = "card";
+        obinThumbnail.id = "obinthumbnail";
+        obin.appendChild(obinThumbnail);
+      }
+    }
+
     if (this.area == "deck") {
       this.domElement.style.backgroundImage = `url(${this.image})`;
       this.known = true;
       if (gameState["deck"].length == 0) {
-        deck.firstChild.remove();
+        deck.lastChild.remove();
       }
     }
 
-    if (["hand","play"].includes(this.area)) {
+    if (this.area == "odeck") {
+      this.domElement.style.backgroundImage = `url(${this.image})`;
+      this.known = true;
+      if (gameState["odeck"].length == 0) {
+        odeck.lastChild.remove();
+      }
+    }
+
+    if (["hand","ohand"].includes(this.area)) {
       document.getElementById(this.area).removeChild(this.domElement);
     }
 
@@ -239,8 +346,8 @@ class Card {
     }
 
     if (area == "bin") {
-      if (bin.firstChild) {
-        bin.firstChild.remove()
+      if (bin.lastChild) {
+        bin.lastChild.remove()
       }
       binThumbnail = document.createElement("div");
       binThumbnail.style.backgroundImage = `url(${this.image})`;
@@ -248,13 +355,101 @@ class Card {
       binThumbnail.id = "binthumbnail";
       bin.appendChild(binThumbnail);
     }
-    else if (area == "deck") {
-      if (deck.firstChild) {
-        deck.firstChild.remove();
+
+    else if (area == "obin") {
+      if (obin.lastChild) {
+        obin.lastChild.remove()
+      }
+      obinThumbnail = document.createElement("div");
+      obinThumbnail.style.backgroundImage = `url(${this.image})`;
+      obinThumbnail.className = "card";
+      obinThumbnail.id = "obinthumbnail";
+      obin.appendChild(obinThumbnail);
+    }
+    else if (area == "energy") {
+      if (energy.lastChild) {
+        energy.lastChild.remove()
+      }
+      energyThumbnail = document.createElement("div");
+      energyThumbnail.style.backgroundImage = `url(${this.image})`;
+      energyThumbnail.className = "card";
+      energyThumbnail.id = "energythumbnail";
+      energy.appendChild(energyThumbnail);
+    }
+
+    else if (area == "oenergy") {
+      if (oenergy.lastChild) {
+        oenergy.lastChild.remove()
+      }
+      oenergyThumbnail = document.createElement("div");
+      oenergyThumbnail.style.backgroundImage = `url(${this.image})`;
+      oenergyThumbnail.className = "card";
+      oenergyThumbnail.id = "oenergythumbnail";
+      oenergy.appendChild(oenergyThumbnail);
+    }
+    else if (area == "core") {
+      if (core.lastChild) {
+        core.lastChild.remove()
+      }
+      coreThumbnail = document.createElement("div");
+      coreThumbnail.style.backgroundImage = `url(${this.image})`;
+      coreThumbnail.className = "card";
+      coreThumbnail.id = "corethumbnail";
+      core.appendChild(coreThumbnail);
+    }
+
+    else if (area == "ocore") {
+      if (ocore.lastChild) {
+        ocore.lastChild.remove()
+      }
+      ocoreThumbnail = document.createElement("div");
+      ocoreThumbnail.style.backgroundImage = `url(${this.image})`;
+      ocoreThumbnail.className = "card";
+      ocoreThumbnail.id = "ocorethumbnail";
+      ocore.appendChild(ocoreThumbnail);
+    }
+    else if (area == "control") {
+      if (control.lastChild) {
+        control.lastChild.remove()
+      }
+      controlThumbnail = document.createElement("div");
+      controlThumbnail.style.backgroundImage = `url(${this.image})`;
+      controlThumbnail.className = "card";
+      controlThumbnail.id = "controlthumbnail";
+      control.appendChild(controlThumbnail);
+    }
+
+    else if (area == "ocontrol") {
+      if (ocontrol.lastChild) {
+        ocontrol.lastChild.remove()
+      }
+      ocontrolThumbnail = document.createElement("div");
+      ocontrolThumbnail.style.backgroundImage = `url(${this.image})`;
+      ocontrolThumbnail.className = "card";
+      ocontrolThumbnail.id = "ocontrolthumbnail";
+      ocontrol.appendChild(ocontrolThumbnail);
+    }
+    else if (area == "odeck") {
+      if (odeck.lastChild) {
+        odeck.lastChild.remove();
       }
       this.known = false;
       this.domElement.style.backgroundImage = `url(${cardBack})`
-      deckThumbnail = document.createElement("div");
+      var odeckThumbnail = document.createElement("div");
+      odeckThumbnail.style.backgroundImage = `url(${cardBack})`
+      odeckThumbnail.className = "card";
+      odeckThumbnail.id = "odeckthumbnail";
+      odeck.appendChild(odeckThumbnail);
+      this.options = ["Draw", "Shuffle"];
+    }
+
+    else if (area == "deck") {
+      if (deck.lastChild) {
+        deck.lastChild.remove();
+      }
+      this.known = false;
+      this.domElement.style.backgroundImage = `url(${cardBack})`
+      var deckThumbnail = document.createElement("div");
       deckThumbnail.style.backgroundImage = `url(${cardBack})`
       deckThumbnail.className = "card";
       deckThumbnail.id = "deckthumbnail";
@@ -262,12 +457,17 @@ class Card {
       this.options = ["Draw", "Shuffle"];
     }
     else if (area == "threadmark") {
+
     }
     else {
       document.getElementById(area).appendChild(this.domElement);
     }
+    if (area == "ohand") {
+      console.log("hand")
+      this.known = false;
+      this.domElement.style.backgroundImage = `url(${cardBack})`
+    }
     this.area = area;
-    this.options = options.filter(item => item != `Send to ${this.area}`);
     this.options = options.filter(item => item != `Send to ${this.area}`);
     // Clean up view
     popup.style.display = "none";

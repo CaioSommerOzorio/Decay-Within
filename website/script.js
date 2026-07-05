@@ -17,15 +17,16 @@ popup.style.display = "none";
 
 var selected = null;
 var cardDict = {};
-var options = ["View","Send to play","Send to hand","Send to bin","Send to deck"];
+var options = ["View","Send to play","Send to hand","Send to bin","Send to deck","Threadmark"];
 var binThumbnail = null;
 var deckThumbnail = null;
 
 gameState = {
   "play": [],
   "hand": [],
-  "bin": [],
   "deck": [],
+  "bin": [],
+  "threadmark": [],
   "playerlife": 50,
   "playerdecay": 0
 };
@@ -41,6 +42,10 @@ Array.prototype.shuffle = function() {
 
   this.splice(0, this.length, ...result);
   return this;
+}
+
+function isNumeric(value) {
+  return !isNaN(parseFloat(value)) && isFinite(value);
 }
 
 function assign(obj, val) {
@@ -65,14 +70,49 @@ function cardClick(card, e) {
   selected = card;
 }
 
+function showThreadmark() {
+  eview.style.display = "flex";
+  eview.replaceChildren();
+  gameState["threadmark"].forEach((element) => {
+    eview.appendChild(element.domElement);
+    element.domElement.replaceChildren();
+    var counter = document.createElement("div");
+    counter.className = "counter";
+    counter.innerHTML = element.threadmark;
+    element.domElement.appendChild(counter);
+    counter.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      element.threadmark--;
+      counter.innerHTML = element.threadmark;
+    });
+    counter.addEventListener("click", () => {
+      element.threadmark++;
+      counter.innerHTML = element.threadmark;
+    });
+  });
+}
+
 document.body.addEventListener('click', (event) => {
   if (event.target.className != "card") {
     popup.style.display = "none";
-    if (event.target.id != "expandview" && event.target.className != "bin") {
+    if (
+      event.target.id != "expandview" &&
+      event.target.className != "bin" &&
+      event.target.innerHTML != "Show Threadmark Summons" &&
+      event.target.className != "counter") {
       eview.style.display = "none";
     }
   }
-})
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key == "Escape") {
+    if (popup.style.display == "none") {
+      eview.style.display = "none";
+    }
+    popup.style.display = "none";
+  }
+});
 
 deck.addEventListener('click', (e) => {
   buildPopup(["Draw","Shuffle"], e);
@@ -84,15 +124,6 @@ bin.addEventListener('click', () => {
   gameState["bin"].forEach((element) => {
     eview.appendChild(element.domElement);
   });
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key == "Escape") {
-    if (popup.style.display == "none") {
-      eview.style.display = "none";
-    }
-    popup.style.display = "none";
-  }
 });
 
 popup.addEventListener('click', () => {
@@ -113,6 +144,13 @@ popup.addEventListener('click', () => {
       break;
     case "Send to hand":
       selected.sendTo("hand");
+      break;
+    case "Threadmark":
+      selected.threadmark = window.prompt("How many threadmark counters?");
+      if (!isNumeric(selected.threadmark)) {
+        selected.threadmark = 0;
+      }
+      selected.sendTo("threadmark")
       break;
     case "Draw":
       gameState["deck"].at(-1).sendTo("hand");
@@ -195,6 +233,11 @@ class Card {
     if (["hand","play"].includes(this.area)) {
       document.getElementById(this.area).removeChild(this.domElement);
     }
+
+    if (this.area == "threadmark") {
+      this.domElement.replaceChildren();
+    }
+
     if (area == "bin") {
       if (bin.firstChild) {
         bin.firstChild.remove()
@@ -217,6 +260,8 @@ class Card {
       deckThumbnail.id = "deckthumbnail";
       deck.appendChild(deckThumbnail);
       this.options = ["Draw", "Shuffle"];
+    }
+    else if (area == "threadmark") {
     }
     else {
       document.getElementById(area).appendChild(this.domElement);

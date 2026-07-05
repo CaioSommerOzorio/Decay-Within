@@ -40,6 +40,8 @@ div {
   background-size: 100% 100%; /* Width Height */
   background-repeat: no-repeat;
   margin: 5px;
+  display: flex;
+  justify-content: center;
 }
 
 .card:hover {
@@ -168,4 +170,28 @@ div {
   display: none;
   align-items: center;
   justify-content: center;
+}
+
+.counter {
+  width: min-content;
+  display: flex;
+  justify-content: space-around;
+  position: absolute;
+  bottom: 0;
+  position: relative;
+  font-size: 1rem;
+  background-color: #0009;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 6px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  min-width: 1.2rem;
+  text-align: center;
+  line-height: 1.3rem;
+  font-weight: 600;
+  padding: 2px 4px;
+  height: 1.4rem;
+  user-select: none;
+  margin-top: auto;
 }
